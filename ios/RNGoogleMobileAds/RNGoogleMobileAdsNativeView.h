@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright (c) 2016-present Invertase Limited & Contributors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,23 +15,30 @@
  *
  */
 
-import React, { createRef } from 'react';
-import { BannerAdProps } from '../types/BannerAdProps';
-import { BaseAd } from './BaseAd';
-import GoogleMobileAdsBannerView, {
-  Commands,
-} from '../specs/components/GoogleMobileAdsBannerViewNativeComponent';
+#import <GoogleMobileAds/GADNativeAd.h>
+#import <React/RCTBridge.h>
+#import <React/RCTUIManager.h>
 
-export class BannerAd extends React.Component<BannerAdProps> {
-  private ref = createRef<React.ElementRef<typeof GoogleMobileAdsBannerView>>();
+#ifdef RCT_NEW_ARCH_ENABLED
+#import <React/RCTViewComponentView.h>
+#else
+#import <React/RCTView.h>
+#endif
 
-  load() {
-    if (this.ref.current) {
-      Commands.load(this.ref.current);
-    }
-  }
+NS_ASSUME_NONNULL_BEGIN
 
-  render() {
-    return <BaseAd ref={this.ref} sizes={[this.props.size]} {...this.props} />;
-  }
-}
+#ifdef RCT_NEW_ARCH_ENABLED
+@interface RNGoogleMobileAdsNativeView : RCTViewComponentView
+#else
+@interface RNGoogleMobileAdsNativeView : GADNativeAdView
+
+- (instancetype)initWithBridge:(RCTBridge *)bridge;
+#endif
+
+@end
+
+@interface RNGoogleMobileAdsNativeViewManager : RCTViewManager
+
+@end
+
+NS_ASSUME_NONNULL_END
