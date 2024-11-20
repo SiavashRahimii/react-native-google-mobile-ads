@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 #ifdef RCT_NEW_ARCH_ENABLED
 @interface RNGoogleMobileAdsNativeView : RCTViewComponentView
+
+@property(nonatomic, strong, nullable) GADNativeAdView *contentView;
 #else
 @interface RNGoogleMobileAdsNativeView : GADNativeAdView
 
